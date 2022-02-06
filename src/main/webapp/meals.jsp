@@ -23,25 +23,31 @@
 <table>
     <thead>
     <tr>
-        <th colspan="4">Meals</th>
+        <th colspan="7">Meals</th>
     </tr>
     <tr>
+        <th>ID</th>
         <th>Date&Time</th>
         <th>Description</th>
         <th>Calories</th>
         <th>Excess</th>
+        <th colspan=2>Action</th>
     </tr>
     </thead>
     <tbody>
         <c:forEach var="meal" items="${meals}">
             <tr style="${meal.excess == true ? "color: red" : "color: forestgreen"}">
-                <td>${meal.dateTime.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+                <td>${meal.mealToId}</td>
+                <td>${meal.dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td>${meal.excess}</td>
+                <td><a href="meals?action=edit&mealToId=<c:out value="${meal.mealToId}"/>">Update</a> </td>
+                <td><a href="meals?action=delete&mealToId=<c:out value="${meal.mealToId}"/>">Delete</a> </td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
+<p><a href="meals?action=insert">Add User</a></p>
 </body>
 </html>
