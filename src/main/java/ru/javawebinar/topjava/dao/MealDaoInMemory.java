@@ -2,40 +2,74 @@ package ru.javawebinar.topjava.dao;
 
 import ru.javawebinar.topjava.model.Meal;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealDaoInMemory implements MealDao {
 
-    private List<Meal> meals;
+    private static AtomicInteger mealIdCounter = new AtomicInteger(0);
+    private static ConcurrentHashMap<Integer, Meal> mealMap = new ConcurrentHashMap<>();
+    static {
+        Meal meal =  new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
 
-    public MealDaoInMemory(List<Meal> meals) {
-        this.meals = new CopyOnWriteArrayList<>(meals);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
+
+        meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
     }
 
     @Override
-    public void addMeal(Meal meal) {
-        meals.add(meal);
+    public void add(Meal meal) {
+        meal.setId(mealIdCounter.incrementAndGet());
+        mealMap.put(mealIdCounter.get(),meal);
     }
 
     @Override
-    public void deleteMeal(int mealId) {
-        meals.removeIf(meal -> meal.getMealId().intValue() == mealId);
+    public Meal delete(int mealId) {
+        return mealMap.remove(mealId);
     }
 
     @Override
-    public void updateMeal(Meal meal) {
-        meals.removeIf(m -> m.getMealId().intValue() == meal.getMealId().intValue());
-        addMeal(meal);
+    public Meal update(int mealId, Meal meal) {
+        mealMap.remove(mealId);
+        meal.setId(mealId);
+        mealMap.put(mealId, meal);
+        return meal;
     }
 
     @Override
-    public List<Meal> getAllMeal() {
-        return meals;
+    public Meal getById(int mealId) {
+        return mealMap.get(mealId);
     }
 
     @Override
-    public Meal getMealById(int id) {
-        return meals.parallelStream().filter(meal -> meal.getMealId().intValue() == id).findFirst().orElse(null);
+    public List<Meal> getAllInList() {
+        return new ArrayList<>(mealMap.values());
     }
 }

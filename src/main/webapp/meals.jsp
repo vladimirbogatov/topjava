@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vladi
-  Date: 04.02.2022
-  Time: 21:02
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -23,31 +16,27 @@
 <table>
     <thead>
     <tr>
-        <th colspan="7">Meals</th>
+        <th colspan="5">Meals</th>
     </tr>
     <tr>
-        <th>ID</th>
         <th>Date&Time</th>
         <th>Description</th>
         <th>Calories</th>
-        <th>Excess</th>
         <th colspan=2>Action</th>
     </tr>
     </thead>
     <tbody>
         <c:forEach var="meal" items="${meals}">
-            <tr style="${meal.excess == true ? "color: red" : "color: forestgreen"}">
-                <td>${meal.mealToId}</td>
-                <td>${meal.dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+            <tr style="${meal.excess ? "color: red" : "color: forestgreen"}">
+                <td>${meal.dateTime.format(DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm"))}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td>${meal.excess}</td>
-                <td><a href="meals?action=edit&mealToId=<c:out value="${meal.mealToId}"/>">Update</a> </td>
-                <td><a href="meals?action=delete&mealToId=<c:out value="${meal.mealToId}"/>">Delete</a> </td>
+                <td><a href="meals?action=edit&id=${meal.id}">Update</a> </td>
+                <td><a href="meals?action=delete&id=${meal.id}">Delete</a> </td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
-<p><a href="meals?action=insert">Add User</a></p>
+<p><a href="meals?action=insert">Add meal</a></p>
 </body>
 </html>
