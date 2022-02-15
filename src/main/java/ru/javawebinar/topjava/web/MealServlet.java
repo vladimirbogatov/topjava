@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
+import ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.MealTo;
@@ -26,7 +27,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     public void init() {
-        mealService = new MealService();
+        mealService = new MealService(new InMemoryMealRepository(), new InMemoryUserRepository());
     }
 
     @Override

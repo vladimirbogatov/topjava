@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ru.javawebinar.topjava</OriginalElement>
+  <nodes>
+    <node x="902.8959926607474" y="995.0">ru.javawebinar.topjava.service.UserService</node>
+    <node x="1248.7434210526317" y="310.9905029897995">ru.javawebinar.topjava.model.Role</node>
+    <node x="1145.4973064035403" y="1281.17305663032">ru.javawebinar.topjava.web.UserServlet</node>
+    <node x="731.0" y="1489.0">ru.javawebinar.topjava.to</node>
+    <node x="0.0" y="1489.0">ru.javawebinar.topjava.web.SecurityUtil</node>
+    <node x="1252.7434210526317" y="550.6709461836087">ru.javawebinar.topjava.SpringMain</node>
+    <node x="517.4868399197376" y="0.0">ru.javawebinar.topjava.model.AbstractBaseEntity</node>
+    <node x="208.35908221435756" y="227.0">ru.javawebinar.topjava.model.Meal</node>
+    <node x="585.3768274853803" y="201.71860710517058">ru.javawebinar.topjava.model.AbstractNamedEntity</node>
+    <node x="243.0" y="1489.0">ru.javawebinar.topjava.web.meal</node>
+    <node x="-7.881655245123852" y="1062.0">ru.javawebinar.topjava.service.MealService</node>
+    <node x="411.0" y="1489.0">ru.javawebinar.topjava.web.user</node>
+    <node x="-110.65866305666523" y="664.8383749560323">ru.javawebinar.topjava.repository.MealRepository</node>
+    <node x="965.3370760233926" y="201.71860710517058">ru.javawebinar.topjava.model.User</node>
+    <node x="575.0" y="1489.0">ru.javawebinar.topjava.util</node>
+    <node x="547.3768274853803" y="642.3383749560323">ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository</node>
+    <node x="55.491593567251584" y="1256.5">ru.javawebinar.topjava.web.MealServlet</node>
+    <node x="198.85908221435756" y="664.8383749560323">ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository</node>
+    <node x="1016.1793201317288" y="711.3383749560323">ru.javawebinar.topjava.repository.UserRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ru.javawebinar.topjava.SpringMain" target="ru.javawebinar.topjava.model.Role" relationship="DEPENDENCY">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.model.User" target="ru.javawebinar.topjava.model.Role" relationship="TO_MANY">
+      <point x="95.0" y="-59.72760710517059" />
+      <point x="-77.5" y="-14.99950298979951" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.web.MealServlet" target="ru.javawebinar.topjava.repository.MealRepository" relationship="TO_ONE">
+      <point x="-170.0" y="15.0" />
+      <point x="-40.38165524512385" y="1354.5" />
+      <point x="-21.72299218845862" y="60.5" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.UserService" target="ru.javawebinar.topjava.model.User" relationship="DEPENDENCY">
+      <point x="0.0" y="-94.0" />
+      <point x="-63.94108336264503" y="215.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" target="ru.javawebinar.topjava.model.AbstractNamedEntity" relationship="DEPENDENCY">
+      <point x="19.0" y="-105.5" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.web.MealServlet" target="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" relationship="CREATE">
+      <point x="84.86748864710597" y="-83.0" />
+      <point x="0.0" y="83.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.MealRepository" target="ru.javawebinar.topjava.model.Meal" relationship="DEPENDENCY">
+      <point x="0.0" y="-60.5" />
+      <point x="-18.658663056665233" y="380.0" />
+      <point x="-102.0" y="15.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.model.User" target="ru.javawebinar.topjava.model.AbstractNamedEntity" relationship="GENERALIZATION">
+      <point x="-94.99999999999989" y="-154.0" />
+      <point x="94.0" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.UserService" target="ru.javawebinar.topjava.repository.UserRepository" relationship="DEPENDENCY">
+      <point x="27.283327470981362" y="-94.0" />
+      <point x="-78.49999999999989" y="71.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" target="ru.javawebinar.topjava.repository.UserRepository" relationship="REALIZATION">
+      <point x="113.0" y="34.5" />
+      <point x="-85.99999999999989" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.model.AbstractNamedEntity" target="ru.javawebinar.topjava.model.AbstractBaseEntity" relationship="GENERALIZATION">
+      <point x="1.7251461963496695E-4" y="-60.99960710517058" />
+      <point x="679.377" y="173.0" />
+      <point x="602.487" y="173.0" />
+      <point x="1.6008026238978346E-4" y="72.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.MealService" target="ru.javawebinar.topjava.repository.MealRepository" relationship="DEPENDENCY">
+      <point x="-20.77700781154138" y="-27.0" />
+      <point x="84.5" y="60.5" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.UserService" target="ru.javawebinar.topjava.model.AbstractBaseEntity" relationship="DEPENDENCY">
+      <point x="93.5" y="0.0" />
+      <point x="1421.2434210526317" y="1089.0" />
+      <point x="1421.2434210526317" y="72.0" />
+      <point x="85.0" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" target="ru.javawebinar.topjava.model.User" relationship="TO_MANY">
+      <point x="34.0" y="-105.5" />
+      <point x="694.3768274853803" y="416.7186071051706" />
+      <point x="-94.99999999999989" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.SpringMain" target="ru.javawebinar.topjava.model.User" relationship="CREATE">
+      <point x="-73.5" y="0.0" />
+      <point x="95.0" y="160.95233907843817" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.web.MealServlet" target="ru.javawebinar.topjava.repository.MealRepository" relationship="DEPENDENCY">
+      <point x="-170.0" y="0.0" />
+      <point x="-25.381655245123852" y="1339.5" />
+      <point x="-6.722992188458619" y="60.5" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" target="ru.javawebinar.topjava.model.User" relationship="DEPENDENCY">
+      <point x="113.00017251461963" y="-3.7495603237402975E-4" />
+      <point x="839.0" y="747.838" />
+      <point x="839.0" y="672.0" />
+      <point x="1060.337" y="672.0" />
+      <point x="-7.60233924665954E-5" y="215.00039289482947" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.UserRepository" target="ru.javawebinar.topjava.model.User" relationship="DEPENDENCY">
+      <point x="0.0" y="-71.0" />
+      <point x="41.84224410833622" y="215.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" target="ru.javawebinar.topjava.repository.MealRepository" relationship="REALIZATION">
+      <point x="-111.5" y="14.999625043967626" />
+      <point x="92.0" y="37.499625043967626" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.web.MealServlet" target="ru.javawebinar.topjava.model.Meal" relationship="CREATE">
+      <point x="-170.0" y="30.0" />
+      <point x="-128.15866305666523" y="1369.5" />
+      <point x="-128.15866305666523" y="350.0" />
+      <point x="-102.0" y="-15.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" target="ru.javawebinar.topjava.model.Meal" relationship="DEPENDENCY">
+      <point x="-111.50008221435755" y="-3.7495603237402975E-4" />
+      <point x="137.0" y="747.838" />
+      <point x="137.0" y="365.0" />
+      <point x="-102.00008221435755" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.UserService" target="ru.javawebinar.topjava.repository.UserRepository" relationship="TO_ONE">
+      <point x="86.0" y="-94.0" />
+      <point x="-19.78332747098125" y="71.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" target="ru.javawebinar.topjava.model.Meal" relationship="TO_MANY">
+      <point x="0.0" y="-83.0" />
+      <point x="0.0" y="138.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.service.MealService" target="ru.javawebinar.topjava.repository.MealRepository" relationship="TO_ONE">
+      <point x="-87.0" y="-27.0" />
+      <point x="18.27700781154138" y="60.5" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" target="ru.javawebinar.topjava.model.AbstractBaseEntity" relationship="DEPENDENCY">
+      <point x="111.49991778564242" y="-3.7495603237402975E-4" />
+      <point x="470.0" y="747.838" />
+      <point x="470.0" y="72.0" />
+      <point x="-84.99983991973761" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.model.Meal" target="ru.javawebinar.topjava.model.AbstractBaseEntity" relationship="GENERALIZATION">
+      <point x="0.0" y="-138.0" />
+      <point x="310.35908221435756" y="57.0" />
+      <point x="-85.0" y="-15.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" target="ru.javawebinar.topjava.model.AbstractBaseEntity" relationship="DEPENDENCY">
+      <point x="-112.99982748538037" y="-3.7495603237402975E-4" />
+      <point x="470.0" y="747.838" />
+      <point x="470.0" y="72.0" />
+      <point x="-84.99983991973761" y="0.0" />
+    </edge>
+    <edge source="ru.javawebinar.topjava.model.User" target="ru.javawebinar.topjava.model.Role" relationship="DEPENDENCY">
+      <point x="94.99992397660753" y="3.928948294174006E-4" />
+      <point x="1203.0" y="416.719" />
+      <point x="1203.0" y="371.991" />
+      <point x="-77.50042105263174" y="4.97010200490422E-4" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.4484227129337539" showDependencies="true" x="644.0539885435021" y="1184.4041505451987" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
