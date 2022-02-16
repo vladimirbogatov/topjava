@@ -3,14 +3,13 @@ package ru.javawebinar.topjava.repository.inmemory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.javawebinar.topjava.model.AbstractNamedEntity;
-import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
-import ru.javawebinar.topjava.util.MealsUtil;
-import ru.javawebinar.topjava.util.UsersUtil;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -20,8 +19,12 @@ public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
     private final Map<Integer, User> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
+
     {
-        UsersUtil.users.forEach(this::save);
+        this.save(new User(null, "Alex", "email0@gmail.com", "qwerty0", Role.ADMIN));
+        this.save(new User(null, "Marty", "email1@gmail.com", "qwerty1", Role.USER));
+        this.save(new User(null, "Melman", "email2@gmail.com", "qwerty2", Role.USER));
+        this.save(new User(null, "Glory", "email3@gmail.com", "qwerty3", Role.USER));
     }
 
     @Override
@@ -51,13 +54,19 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        List<User> result = new ArrayList<>(repository.values());
-        return result.stream().sorted((Comparator.comparing(AbstractNamedEntity::getName))).collect(Collectors.toList());
+        Comparator<User> comparator = Comparator
+                .comparing(User::getName)
+                .thenComparing(User::getEmail);
+        return repository.values().stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return repository.values().stream().filter(u -> u.getEmail().equals(email)).findAny().orElse(null);
+        return repository.values().stream()
+                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                .findAny().orElse(null);
     }
 }
