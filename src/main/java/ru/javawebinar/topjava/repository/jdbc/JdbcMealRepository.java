@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 
 import java.time.LocalDateTime;
@@ -35,15 +34,14 @@ public class JdbcMealRepository implements MealRepository {
     public Meal save(Meal meal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
-                .addValue("datetime", meal.getDateTime())
+                .addValue("date_time", meal.getDateTime())
                 .addValue("description", meal.getDescription())
-                .addValue("calories", meal.getCalories())
-                .addValue("user_id", userId);
+                .addValue("calories", meal.getCalories());
         if (meal.isNew()) {
             Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
-        } else if (namedParameterJdbcTemplate.update(
-                "UPDATE meals SET datetime=:datetime, description=:description, calories=:calories WHERE id=:id", map) == 0) {
+        } else if (namedParameterJdbcTemplate.update(String.format(
+                "UPDATE meals SET date_time=:date_time, description=:description, calories=:calories WHERE id=:id AND user_id=%d", userId), map) == 0) {
             return null;
         }
         return meal;
@@ -62,20 +60,11 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? ORDER BY datetime desc ", ROW_MAPPER, userId);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? ORDER BY date_time desc ", ROW_MAPPER, userId);
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        StringBuilder stringBuilder = new StringBuilder(String.format("SELECT * FROM meals WHERE user_id = %d",userId));
-        if (startDateTime != null) {
-            stringBuilder.append(String.format(" AND datetime >='%s'", startDateTime));
-        }
-        if (startDateTime != null) {
-            stringBuilder.append(String.format(" AND datetime <='%s'", endDateTime));
-        }
-        stringBuilder.append(" ORDER BY datetime desc");
-
-        return jdbcTemplate.query(stringBuilder.toString(), ROW_MAPPER);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? AND date_time >=? AND date_time <? ORDER BY date_time desc", ROW_MAPPER, userId, startDateTime, endDateTime);
     }
 }
