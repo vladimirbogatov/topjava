@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,6 @@ import java.time.LocalTime;
         @NamedQuery(name = Meal.GET_BETWEEN_HALF_OPEN, query = "SELECT m FROM Meal m WHERE m.user.id=:user_id" +
                 " AND m.dateTime >=:date_time_start AND m.dateTime < :date_time_end ORDER BY m.dateTime DESC")
 })
-
 @Entity
 @Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "user_datetime_idx"))
 public class Meal extends AbstractBaseEntity {
@@ -35,11 +36,12 @@ public class Meal extends AbstractBaseEntity {
     private String description;
 
     @Column(name = "calories", nullable = false)
+    @Range(min = 10, max = 5000)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Meal() {
