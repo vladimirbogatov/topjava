@@ -8,11 +8,11 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
+
 <section>
-    <h3><a href="index.jsp">Home</a></h3>
-    <hr/>
-    <h2>Meals</h2>
-    <form method="get" action="meals">
+    <h3><spring:message code="meal.title"/></h3>
+
+    <form method="get" action="${pageContext.request.contextPath}/meals">
         <input type="hidden" name="action" value="filter">
         <dl>
             <dt>From Date (inclusive):</dt>
@@ -33,7 +33,8 @@
         <button type="submit">Filter</button>
     </form>
     <hr/>
-    <a href="meals?action=create">Add Meal</a>
+        <form id="admeal" method="get" action="${pageContext.request.contextPath}/meals/add"></form>
+        <a href="#" onclick="document.getElementById('admeal').submit();">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -56,11 +57,17 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
-                <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+                <td>
+                    <form id="updateform" method="get" action="${pageContext.request.contextPath}/meals/update/${meal.id}"></form>
+                    <a href="#" onclick="document.getElementById('updateform').submit();">Update</a>
+                <td>
+                    <form id="deleteform" method="post" action="${pageContext.request.contextPath}/meals/delete/${meal.id}"></form>
+                    <a href="#" onclick="document.getElementById('deleteform').submit();">Delete</a>
+                </td>
             </tr>
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
