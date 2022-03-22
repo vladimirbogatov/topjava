@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.util.ValidationUtil.getRootCause;
+import static ru.javawebinar.topjava.Profiles.*;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -31,19 +32,14 @@ import static ru.javawebinar.topjava.util.ValidationUtil.getRootCause;
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public abstract class AbstractServiceTest {
 
-    @Autowired
-    private Environment environment;
-
-    @Before
-    public void checkConfig() {
-        Assume.assumeTrue(isNotJDBC());
-    }
-
     @ClassRule
     public static ExternalResource summary = TimingRules.SUMMARY;
 
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
+
+    @Autowired
+    private Environment environment;
 
     //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
     protected <T extends Throwable> void validateRootCause(Class<T> rootExceptionClass, Runnable runnable) {
@@ -56,8 +52,8 @@ public abstract class AbstractServiceTest {
         });
     }
 
-    protected boolean isNotJDBC() {
-        return Arrays.stream(environment.getActiveProfiles()).noneMatch(
-                env -> (env.equalsIgnoreCase("jdbc")));
+    protected boolean isNotJdbc() {
+        return Arrays.stream(environment.getActiveProfiles())
+                .noneMatch(env -> (env.equalsIgnoreCase(JDBC)));
     }
 }

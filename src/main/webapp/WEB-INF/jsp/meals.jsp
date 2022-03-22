@@ -12,36 +12,35 @@
 <section>
     <h3><spring:message code="meal.title"/></h3>
 
-    <form method="get" action="${pageContext.request.contextPath}/meals">
+    <form method="get" action="meals/filter">
         <input type="hidden" name="action" value="filter">
         <dl>
-            <dt>From Date (inclusive):</dt>
+            <dt><spring:message code="meal.fromD"/>:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
         </dl>
         <dl>
-            <dt>To Date (inclusive):</dt>
+            <dt><spring:message code="meal.toD"/>:</dt>
             <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
         </dl>
         <dl>
-            <dt>From Time (inclusive):</dt>
+            <dt><spring:message code="meal.fromT"/>:</dt>
             <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
         </dl>
         <dl>
-            <dt>To Time (exclusive):</dt>
+            <dt><spring:message code="meal.toT"/>:</dt>
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
-        <button type="submit">Filter</button>
+        <button type="submit"><spring:message code="common.filter"/></button>
     </form>
     <hr/>
-        <form id="admeal" method="get" action="${pageContext.request.contextPath}/meals/add"></form>
-        <a href="#" onclick="document.getElementById('admeal').submit();">Add Meal</a>
+        <a href="meals/add"><spring:message code="meal.addmeal"/></a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Calories</th>
+            <th><spring:message code="meal.datetime"/></th>
+            <th><spring:message code="meal.description"/></th>
+            <th><spring:message code="meal.calories"/></th>
             <th></th>
             <th></th>
         </tr>
@@ -57,13 +56,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td>
-                    <form id="updateform" method="get" action="${pageContext.request.contextPath}/meals/update/${meal.id}"></form>
-                    <a href="#" onclick="document.getElementById('updateform').submit();">Update</a>
-                <td>
-                    <form id="deleteform" method="post" action="${pageContext.request.contextPath}/meals/delete/${meal.id}"></form>
-                    <a href="#" onclick="document.getElementById('deleteform').submit();">Delete</a>
-                </td>
+                <td><a href="meals/update/${meal.id}"><spring:message code="common.update"/></a></td>
+                <td><a href="meals/delete/${meal.id}"><spring:message code="common.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>
