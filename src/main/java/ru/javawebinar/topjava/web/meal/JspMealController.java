@@ -21,23 +21,23 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
-@RequestMapping(value = "/meals")
+@RequestMapping("/meals")
 public class JspMealController extends AbstractMealController {
 
     @GetMapping
-    public String getAll(Model model, HttpServletRequest request) {
-        log.info("Get all meals method");
+    public String getAll(Model model) {
         model.addAttribute("meals", super.getAll());
         return "meals";
     }
 
-    @GetMapping(value = "/filter")
+    @GetMapping("/filter")
     public String filter(Model model, HttpServletRequest request) {
+        log.info("Get parameters for filter from request");
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-        if (Objects.nonNull(startDate) || Objects.nonNull(endDate) || Objects.nonNull(startTime) || Objects.nonNull(endTime)) {
+        if (startDate != null || endDate != null || startTime != null || endTime != null) {
             model.addAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
         } else {
             return "redirect:/meals";
@@ -47,7 +47,7 @@ public class JspMealController extends AbstractMealController {
 
     @PostMapping
     public String save(HttpServletRequest request) throws UnsupportedEncodingException {
-        log.info("Save meal method");
+        log.info("Made meal from request ");
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
@@ -60,23 +60,20 @@ public class JspMealController extends AbstractMealController {
         return "redirect:/meals";
     }
 
-    @GetMapping(value = "/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
-        log.info("Delete meal method");
         super.delete(Integer.parseInt(id));
         return "redirect:/meals";
     }
 
-    @GetMapping(value = "/update/{id}")
-    public String update(@PathVariable(name = "id") String id, Model model) {
-        log.info("Update meal method");
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable String id, Model model) {
         model.addAttribute("meal", super.get(Integer.parseInt(id)));
         return "mealForm";
     }
 
-    @GetMapping(value = "/add")
+    @GetMapping("/add")
     public String add(Model model) {
-        log.info("Add meal method");
         Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
         return "mealForm";

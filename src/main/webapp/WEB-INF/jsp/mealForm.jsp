@@ -12,9 +12,7 @@
 <section>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <h3>
-        <spring:message code="meal.create" var="create"/>
-        <spring:message code="meal.update" var="update"/>
-        ${meal.id == null ? create : update}
+        <spring:message code="${meal.isNew()? 'meal.create' : 'meal.update'}"/>
     </h3>
     <form method="post" action="meals">
         <input type="hidden" name="id" value="${meal.id}">
