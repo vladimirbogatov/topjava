@@ -45,3 +45,21 @@ $(function () {
         })
     );
 });
+$(document).on("change", ".checkenable", function () {
+    let en;
+
+    if (this.checked) {
+        en = "true";
+    } else {
+        en = "false";
+    }
+
+    let data = {
+        id: $(this).closest("tr").attr('id'),
+        enable: en
+    };
+
+    $.post("rest/" + ctx.ajaxUrl + "enable", data, function () {
+        updateTable();
+    });
+})

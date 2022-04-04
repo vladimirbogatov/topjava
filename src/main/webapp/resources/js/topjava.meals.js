@@ -5,7 +5,6 @@ const ctx = {
     ajaxUrl: mealsAjaxUrl
 };
 
-// $(document).ready(function () {
 $(function () {
     makeEditable(
         $("#datatable").DataTable({
@@ -39,24 +38,20 @@ $(function () {
         })
     );
 });
+
 function filterMeals() {
-    /*alert($("#startDate").val());*/
     let data = {
-        startDate:$("#startDate").val(),
-        endDate:$("#endDate").val(),
-        startTime:$("#startTime").val(),
-        endTime:$("#endTime").val()
+        startDate: $("#startDate").val(),
+        endDate: $("#endDate").val(),
+        startTime: $("#startTime").val(),
+        endTime: $("#endTime").val()
     };
-    $.get(ctx.ajaxUrl+"filter",data, function (data) {
-       ctx.datatableApi.clear().rows.add(data).draw();
+    $.get(ctx.ajaxUrl + "filter", data, function (data) {
+        ctx.datatableApi.clear().rows.add(data).draw();
     });
 }
 
-$(document).on('click', "#ResetForm", function() {
-    // Reset the form
-    document.getElementById('filterMeals').reset();
-});
-
-function clearForm(){
-    document.getElementById('filterMeals').reset();
+function clearForm() {
+    $("#filterMeals").reset();
 }
+
