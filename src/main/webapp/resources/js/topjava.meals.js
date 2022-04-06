@@ -1,4 +1,4 @@
-const mealsAjaxUrl = "UI/meals/";
+const mealsAjaxUrl = "ui/meals/";
 
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
@@ -39,19 +39,19 @@ $(function () {
     );
 });
 
-function filterMeals() {
-    let data = {
-        startDate: $("#startDate").val(),
-        endDate: $("#endDate").val(),
-        startTime: $("#startTime").val(),
-        endTime: $("#endTime").val()
-    };
-    $.get(ctx.ajaxUrl + "filter", data, function (data) {
-        ctx.datatableApi.clear().rows.add(data).draw();
-    });
+function filter_meals() {
+    $.ajax({
+        type: "GET",
+        url: ctx.ajaxUrl + "filter",
+        data: $('#filterMeals').serialize(),
+    }).done(function (data) {
+        redrawTable(data)
+    })
 }
 
 function clearForm() {
-    $("#filterMeals").reset();
+    $("#filterMeals").trigger("reset");
+    updateTable();
 }
+
 

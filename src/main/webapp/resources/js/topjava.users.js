@@ -49,17 +49,17 @@ $(document).on("change", ".checkenable", function () {
     let en;
 
     if (this.checked) {
-        en = "true";
+        en = true;
     } else {
-        en = "false";
+        en = false;
     }
-
-    let data = {
-        id: $(this).closest("tr").attr('id'),
-        enable: en
-    };
-
-    $.post("rest/" + ctx.ajaxUrl + "enable", data, function () {
-        updateTable();
+    let id = $(this).closest("tr").attr('id');
+    let urlRest = "rest/" + ctx.ajaxUrl + id;
+    $.ajax({
+        type: "PATCH",
+        url: urlRest,
+        data: JSON.stringify(en),
+        contentType: 'application/json',
+        success: updateTable()
     });
 })
