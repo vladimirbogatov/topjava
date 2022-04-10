@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;
@@ -41,6 +42,13 @@ public abstract class AbstractMealController {
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
+    protected void create(MealTo mealTo) {
+        int userId = SecurityUtil.authUserId();
+        log.info("create {}", mealTo);
+        checkNew(mealTo);
+        service.create(MealsUtil.createNewFromTo(mealTo),userId);
+    }
+
     public Meal create(Meal meal) {
         int userId = SecurityUtil.authUserId();
         log.info("create {} for user {}", meal, userId);
@@ -51,6 +59,14 @@ public abstract class AbstractMealController {
     public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", meal, userId);
+        assureIdConsistent(meal, id);
+        service.update(meal, userId);
+    }
+
+    public void update(MealTo mealTo, int id) {
+        int userId = SecurityUtil.authUserId();
+        Meal meal = MealsUtil.createNewFromTo(mealTo);
+        log.info("update {} for meal {}", meal, userId);
         assureIdConsistent(meal, id);
         service.update(meal, userId);
     }
