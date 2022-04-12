@@ -4,8 +4,20 @@ const mealAjaxUrl = "profile/meals/";
 const ctx = {
     ajaxUrl: mealAjaxUrl,
     updateTable: function () {
-        $.get(mealAjaxUrl, updateTableByData);
+        $.get(this.ajaxUrl, updateTableByData);
     }
+}
+
+function filterMeal() {
+    let fr = $("#filter");
+    $.ajax({
+        type: "GET",
+        url: ctx.ajaxUrl + "filter",
+        data: fr.serialize()
+    }).done(function (data) {
+        console.log(data);
+        updateTableByData(data);
+    });
 }
 
 function clearFilter() {

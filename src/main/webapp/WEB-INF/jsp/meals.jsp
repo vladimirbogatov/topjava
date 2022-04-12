@@ -41,7 +41,7 @@
                     <span class="fa fa-remove"></span>
                     <spring:message code="common.cancel"/>
                 </button>
-                <button class="btn btn-primary" onclick="ctx.updateTable()">
+                <button class="btn btn-primary" onclick="filterMeal()">
                     <span class="fa fa-filter"></span>
                     <spring:message code="meal.filter"/>
                 </button>
@@ -113,11 +113,10 @@
 </body>
 <script type="text/javascript">
     const i18n = [];
-    i18n["addTitle"] = '<spring:message code="meal.add"/>';
-    i18n["editTitle"] = '<spring:message code="meal.edit"/>';
-
-    <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus","common.confirm"}%>'>
-    i18n["${key}"] = "<spring:message code="${key}"/>";
-    </c:forEach>
+    $( document ).ready(function() {
+        populate(i18n);
+        i18n["addTitle"] = '<spring:message code="meal.add"/>';
+        i18n["editTitle"] = '<spring:message code="meal.edit"/>';
+    });
 </script>
 </html>

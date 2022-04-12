@@ -97,3 +97,10 @@ function failNoty(jqXHR) {
     });
     failedNote.show()
 }
+
+function populate(i18n) {
+    let str = ["common.deleted", "common.saved", "common.enabled", "common.disabled", "common.errorStatus", "common.confirm"];
+    for (var i = 0; i < str.length; i++) {
+        i18n[str[i]] = `<spring:message code="` + str[i] + `" />`;
+    }
+}
