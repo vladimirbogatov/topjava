@@ -4,11 +4,7 @@ const mealAjaxUrl = "profile/meals/";
 const ctx = {
     ajaxUrl: mealAjaxUrl,
     updateTable: function () {
-        $.ajax({
-            type: "GET",
-            url: mealAjaxUrl + "filter",
-            data: $("#filter").serialize()
-        }).done(updateTableByData);
+        $.get(mealAjaxUrl, updateTableByData);
     }
 }
 
@@ -20,11 +16,21 @@ function clearFilter() {
 $(function () {
     makeEditable(
         $("#datatable").DataTable({
+            "ajax": {
+                "url": mealAjaxUrl,
+                "dataSrc": ""
+            },
             "paging": false,
             "info": true,
             "columns": [
                 {
-                    "data": "dateTime"
+                    "data": "dateTime",
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return moment(data).format('YYYY-MM-DD HH:mm');
+                        }
+                        return data;
+                    }
                 },
                 {
                     "data": "description"
@@ -33,12 +39,14 @@ $(function () {
                     "data": "calories"
                 },
                 {
-                    "defaultContent": "Edit",
-                    "orderable": false
+                    "orderable": false,
+                    "defaultContent": "",
+                    "render": renderEditBtn
                 },
                 {
-                    "defaultContent": "Delete",
-                    "orderable": false
+                    "orderable": false,
+                    "defaultContent": "",
+                    "render": renderDeleteBtn
                 }
             ],
             "order": [
@@ -46,7 +54,14 @@ $(function () {
                     0,
                     "desc"
                 ]
-            ]
+            ],
+            "createdRow": function (row, data, dataIndex) {
+                if (data.excess) {
+                    $(row).attr("data-meal-excess", true);
+                } else {
+                    $(row).attr("data-meal-excess", false);
+                }
+            }
         })
     );
 });

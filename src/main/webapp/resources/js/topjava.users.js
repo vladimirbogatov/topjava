@@ -85,6 +85,7 @@ $(function () {
                 ]
             ],
             "createdRow": function (row, data, dataIndex) {
+                console.log(data);
                 if (!data.enabled) {
                     $(row).attr("data-user-enabled", false);
                 }

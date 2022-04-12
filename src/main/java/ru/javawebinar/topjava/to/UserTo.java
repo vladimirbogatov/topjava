@@ -31,9 +31,6 @@ public class UserTo extends BaseTo implements Serializable {
     @NotNull
     private Integer caloriesPerDay = UserUtil.DEFAULT_CALORIES_PER_DAY;
 
-    public UserTo() {
-    }
-
     public UserTo(Integer id, String name, String email, String password, int caloriesPerDay) {
         super(id);
         this.name = name;

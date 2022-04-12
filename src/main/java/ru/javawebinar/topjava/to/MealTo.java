@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava.to;
 
-import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,22 +15,24 @@ public class MealTo extends BaseTo implements Serializable {
     private LocalDateTime dateTime;
 
     @NotBlank
-    @Size(min = 2, max = 120)
+    @Size(min = 2, max = 120, message = "length must be between 2 and 120 characters")
     private String description;
 
-    @Min(value = 10)
-    @Max(value = 5000)
-    private int calories;
+    @Range(min = 10, max = 5000, message = "value must be between 10 and 5000")
+    private String calories;
 
     private boolean excess;
 
+    public MealTo() {
+    }
+
     @ConstructorProperties({"id", "dateTime", "description", "calories", "excess"})
-    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
+    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, Boolean excess) {
         super(id);
         this.dateTime = dateTime;
         this.description = description;
-        this.calories = calories;
-        this.excess = excess;
+        this.calories = Integer.toString(calories);
+        this.excess = excess == null ? false : excess.booleanValue();
     }
 
     public LocalDateTime getDateTime() {
@@ -38,7 +44,7 @@ public class MealTo extends BaseTo implements Serializable {
     }
 
     public int getCalories() {
-        return calories;
+        return Integer.parseInt(calories);
     }
 
     public boolean isExcess() {
@@ -53,7 +59,7 @@ public class MealTo extends BaseTo implements Serializable {
         this.description = description;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(String calories) {
         this.calories = calories;
     }
 

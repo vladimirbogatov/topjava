@@ -20,4 +20,8 @@
     <script src="webjars/datatables/1.11.4/js/jquery.dataTables.min.js" defer></script>
     <script src="webjars/datatables/1.11.4/js/dataTables.bootstrap4.min.js" defer></script>
     <script src="webjars/noty/3.1.4/lib/noty.min.js" defer></script>
+    <script src="//cdn.datatables.net/plug-ins/1.11.5/dataRender/datetime.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" defer></script>
+
+    <script src="//cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js" defer></script>
 </head>
